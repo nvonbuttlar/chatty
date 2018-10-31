@@ -29,6 +29,22 @@ class App extends Component {
       currentUser: data.currentUser.name,
       messages: data.messages
     };
+
+    this.createNewMessage = this.createNewMessage.bind(this);
+  }
+
+  createNewMessage(content) {
+
+    console.log('content!!!!', content);
+    const newMessage = {
+      id: this.state.messages.length+1,
+      username: this.state.currentUser,
+      content: content
+    }
+    const allMessages = this.state.messages.concat(newMessage);
+
+    this.setState({messages: allMessages});
+    //logic to concat
   }
 
 
@@ -39,7 +55,7 @@ class App extends Component {
       <div>
         <NavBar/>
         <MessageList messages={this.state.messages}/>
-        <ChatBar user={this.state.currentUser}/>
+        <ChatBar newMessage={this.createNewMessage} user={this.state.currentUser}/>
       </div>
     );
   }
@@ -49,12 +65,10 @@ class App extends Component {
     console.log("componentDidMount <App />");
     setTimeout(() => {
       console.log("Simulating incoming message");
-      // Add a new message to the list of messages in the data store
-      const newMessage = {id: 3, username: "Mike Meyers", content: "Heyoooooooo"};
-      const messages = this.state.messages.concat(newMessage)
-      // Update the state of the app component.
-      // Calling setState will trigger a call to render() in App and all child components.
-      this.setState({messages: messages})
+      const numCurrMessages = this.state.messages.length;
+      const newMessage = {id: numCurrMessages+1, username: "Mike Meyers", content: "Heyoooooooo"};
+      const messageList = this.state.messages.concat(newMessage)
+      this.setState({messages: messageList})
     }, 3000);
   }
 
