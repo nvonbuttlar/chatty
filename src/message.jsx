@@ -5,6 +5,7 @@ class Message extends Component {
 
 
   render() {
+    console.log('in message')
     return (
       <div>
         <div className="message">
