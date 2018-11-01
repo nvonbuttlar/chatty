@@ -15,6 +15,7 @@ class App extends Component {
     };
 
     this.createNewMessage = this.createNewMessage.bind(this);
+    this.updateUser = this.updateUser.bind(this);
 
     // Creates a new WebSocket at localhost:3001
     this.dogSocket = new WebSocket("ws://localhost:3001");
@@ -22,30 +23,33 @@ class App extends Component {
 
   }
 
+  updateUser(username) {
+    // this.state.currentUser.name = username;
+    this.setState((previousState) => {
+      let user = previousState.currentUser;
+      user.name = username;
+      return {currentUser: user};
+    });
+  }
+
 
   createNewMessage(content) {
-
     const newMessage = {
       username: this.state.currentUser.name,
       content: content
     };
-
-    // const allMessages = this.state.messages.concat(newMessage);
-    // this.setState({messages: allMessages});
     this.dogSocket.send(JSON.stringify(newMessage));
-    //this.dogSocket.send(JSON.stringify(this.state.messages));
-
   }
 
 
   // Mounting Phase 3
   render() {
-    console.log('in render ',this.state.messages);
+    console.log('in render ', this.state.messages);
     return (
       <div>
         <NavBar/>
         <MessageList messages={this.state.messages}/>
-        <ChatBar newMessage={this.createNewMessage} user={this.state.currentUser.name}/>
+        <ChatBar newMessage={this.createNewMessage} newUser={this.updateUser} user={this.state.currentUser.name}/>
       </div>
     );
   }

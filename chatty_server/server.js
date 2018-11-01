@@ -1,3 +1,5 @@
+// CHATTY SERVER
+
 const express = require('express');
 const SocketServer = require('ws').Server;
 const uuidv4 = require('uuid/v4');
@@ -16,6 +18,7 @@ const server = express()
 const wss = new SocketServer({ server });
   console.log('Client connected');
 
+// List of clients
 const clients = [];
 
 

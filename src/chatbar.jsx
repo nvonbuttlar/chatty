@@ -8,17 +8,20 @@ class ChatBar extends Component {
   }
 
   handleKeyPress(event) {
-    if(event.key === 'Enter'){
-      console.log('ENTER PRESSED');
+    if(event.key === 'Enter' && event.target.className === 'chatbar-message'){
       this.props.newMessage(event.target.value);
+      event.target.value = "";
+    } else if (event.target.className === 'chatbar-username') {
+      this.props.newUser(event.target.value);
     }
+
   }
 
   render() {
     return (
       <footer className="chatbar">
-        <input className="chatbar-username" defaultValue={this.props.user} />
-        <input onKeyPress={this.handleKeyPress} className="chatbar-message" placeholder="Type a message and hit ENTER" />
+        <input className="chatbar-username" onChange={this.handleKeyPress} placeholder="Enter a username" />
+        <input className="chatbar-message" onKeyPress={this.handleKeyPress} placeholder="Type a message and hit ENTER" />
       </footer>
     )
   }
