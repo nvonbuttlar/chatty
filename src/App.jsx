@@ -24,6 +24,15 @@ class App extends Component {
   }
 
   updateUser(username) {
+    if(username === this.state.currentUser.name){
+      return;
+    } else {
+       let newName = {
+        type: "nameChange",
+        content: `${this.state.currentUser.name} changed their name to ${username}`
+       }
+       this.dogSocket.send(JSON.stringify(newName));
+    }
     // this.state.currentUser.name = username;
     this.setState((previousState) => {
       let user = previousState.currentUser;
@@ -65,7 +74,6 @@ class App extends Component {
     this.dogSocket.onmessage = (event) => {
       console.log('RE', event.data);
       const parseData = JSON.parse(event.data);
-
       const newMessages = this.state.messages;
       newMessages.push(parseData);
       this.setState({messages: newMessages});
