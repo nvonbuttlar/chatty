@@ -10,29 +10,32 @@ const PORT = 3001;
 
 // Create a new express server
 const server = express()
+
    // Make the express server serve static assets (html, javascript, css) from the /public folder
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
 
 // Create the WebSockets server
 const wss = new SocketServer({ server });
-  console.log('Client connected');
 
-// List of clients
-const clients = [];
-
-
-// Set up a callback that will run when a client connects to the server
-// When a client connects they are assigned a socket, represented by
-// the ws parameter in the callback.
 
 wss.on('connection', (ws) => {
+  console.log('Client connected');
 
-  clients.push(ws)
+  // Set up user count on connection
+  let clientCount = {
+    type: 'userCount',
+    count: wss.clients.size
+  };
 
-// to receive messages from client
+
+  // Loop through each connected client and send object to App
+  wss.clients.forEach(function each(client) {
+    client.send(JSON.stringify(clientCount));
+  });
+
+  // To receive messages from client
   ws.onmessage = function(event){
-    console.log('INCOMING:', JSON.parse(event.data));
     const uniqueId = uuidv4();
     const message  = JSON.parse(event.data);
     const broadcastMessage = {
@@ -51,31 +54,27 @@ wss.on('connection', (ws) => {
         message.type = "incomingMessage"
         break;
 
-      // message.id = uniqueId;
-      // console.log("the nameChange message", message)
-      // clients.forEach(client => {
-      // if(client.readyState === WebSocket.OPEN) {
-      //   client.send(JSON.stringify(message));
-      //   }
-      //  });
-      // default:
-
-    // console.log('OUTGOING', broadcastMessage);
-
-
     }
 
-    clients.forEach(client => {
+    wss.clients.forEach(client => {
     if(client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify(message));
     }
-
   });
-
   }
 
 // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-ws.on('close', () => console.log('Client disconnected'));
+ws.on('close', () => {
+  console.log('Client disconnected')
+
+  // Reassign user count when client disconnects
+  clientCount.count = wss.clients.size;
+
+  // Loop through clients and send new client count data
+  wss.clients.forEach(function each(client) {
+    client.send(JSON.stringify(clientCount));
+  })
+});
 
 
 

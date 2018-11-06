@@ -5,16 +5,15 @@ class MessageList extends Component {
 
   render () {
     const messages = this.props.messages.map((msg, index) => {
-      if (msg.type)
-      return <Message key={index} message={msg} />;
-    })
+      if (msg.type === 'incomingMessage') {
+      return <Message key={index} message={msg}/>;
+    } else if (msg.type === 'incomingNotification') {
+      return <div className="message system">{msg.content}</div>;
+    }
+  });
 
-    console.log('messages ', messages)
-    return (
-      <main className="messages">
-        {messages}
-      </main>
-    )
+  return <main className="messages"> {messages} </main>;
+
   }
 }
 

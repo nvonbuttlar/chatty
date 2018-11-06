@@ -11,8 +11,9 @@ class App extends Component {
 
     this.state = {
       currentUser: {name: "Bob"},
-      messages: []
-    };
+      messages: [],
+      userCount: 0
+    }
 
     this.createNewMessage = this.createNewMessage.bind(this);
     this.updateUser = this.updateUser.bind(this);
@@ -35,7 +36,7 @@ class App extends Component {
     }
     // this.state.currentUser.name = username;
     this.setState((previousState) => {
-      let user = previousState.currentUser;
+      let user  = previousState.currentUser;
       user.name = username;
       return {currentUser: user};
     });
@@ -54,10 +55,9 @@ class App extends Component {
 
   // Mounting Phase 3
   render() {
-    console.log('in render ', this.state.messages);
     return (
       <div>
-        <NavBar/>
+        <NavBar userCount={this.state.userCount}/>
         <MessageList messages={this.state.messages}/>
         <ChatBar newMessage={this.createNewMessage} newUser={this.updateUser} user={this.state.currentUser.name}/>
       </div>
@@ -73,21 +73,29 @@ class App extends Component {
     };
 
     this.dogSocket.onmessage = (event) => {
-      console.log('RE', event.data);
       const parseData = JSON.parse(event.data);
 
-      // switch(parseData.type)
+      switch(parseData.type){
+        case 'incomingMessage':
+          const newMessages = this.state.messages;
+          newMessages.push(parseData);
+          this.setState({messages: newMessages});
+          break;
 
+        case 'incomingNotification':
+          const notification = this.state.messages;
+          notification.push(parseData);
+          this.setState({messages: notification});
+          break;
 
-      const newMessages = this.state.messages;
-      newMessages.push(parseData);
-      this.setState({messages: newMessages});
+        case 'userCount':
+          this.setState({
+            userCount: parseData.count
+          });
+          break;
+      }
     }
-
-
   }
-
-
 }
 
 export default App;
