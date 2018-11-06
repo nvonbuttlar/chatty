@@ -35,32 +35,43 @@ wss.on('connection', (ws) => {
     console.log('INCOMING:', JSON.parse(event.data));
     const uniqueId = uuidv4();
     const message  = JSON.parse(event.data);
+    const broadcastMessage = {
+      id: uniqueId,
+      username: message.username,
+      content: message.content,
+      type: message.type
+    }
+
 
     switch (message.type){
       case 'nameChange':
-      message.id = uniqueId;
-      console.log("the nameChange message", message)
-      clients.forEach(client => {
-      if(client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify(message));
-        }
-       });
-      break;
-      default:
-      const broadcastMessage = {
-      id: uniqueId,
-      username: message.username,
-      content: message.content
-    }
+        message.type = "incomingNotification"
+        break;
+      case 'postMessage':
+        message.type = "incomingMessage"
+        break;
+
+      // message.id = uniqueId;
+      // console.log("the nameChange message", message)
+      // clients.forEach(client => {
+      // if(client.readyState === WebSocket.OPEN) {
+      //   client.send(JSON.stringify(message));
+      //   }
+      //  });
+      // default:
 
     // console.log('OUTGOING', broadcastMessage);
 
-    clients.forEach(client => {
-      if(client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify(message));
-      }
-    });
+
     }
+
+    clients.forEach(client => {
+    if(client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(message));
+    }
+
+  });
+
   }
 
 // Set up a callback for when a client closes the socket. This usually means they closed their browser.

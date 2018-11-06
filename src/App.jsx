@@ -44,6 +44,7 @@ class App extends Component {
 
   createNewMessage(content) {
     const newMessage = {
+      type: 'postMessage',
       username: this.state.currentUser.name,
       content: content
     };
@@ -74,18 +75,15 @@ class App extends Component {
     this.dogSocket.onmessage = (event) => {
       console.log('RE', event.data);
       const parseData = JSON.parse(event.data);
+
+      // switch(parseData.type)
+
+
       const newMessages = this.state.messages;
       newMessages.push(parseData);
       this.setState({messages: newMessages});
     }
 
-
-    // setTimeout(() => {
-    //   console.log("Simulating incoming message");
-    //   const numCurrMessages = this.state.messages.length;
-    //   const newMessage = {id: numCurrMessages+1, username: "Mike Meyers", content: "Heyoooooooo"};
-    //   // this.setState({messages: messageList})
-    // }, 3000);
 
   }
 
