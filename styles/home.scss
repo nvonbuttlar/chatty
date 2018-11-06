@@ -2,7 +2,9 @@
     @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 
     body {
-      background: white;
+      background-image: url(http://downloadicons.net/sites/default/files/chat-icon-64253.png);
+      background-repeat: no-repeat;
+      background-position: 75% 0%;
       color: black;
       font-family: 'Open Sans', sans-serif;
       font-size: 14px;
@@ -10,7 +12,7 @@
     }
 
     .chatbar {
-      background: #FAFAFA;
+      background: #EEEEEE;
       border-top: 1px solid black;
       bottom: 0;
       display: flex;
@@ -46,7 +48,7 @@
     .message.system {
       font-style: italic;
       padding: 5px 60px;
-      color: red;
+      color: grey;
     }
 
     .message-content,
@@ -86,5 +88,11 @@
       line-height: 60px;
       padding: 0 10px;
       text-decoration: none;
+    }
+
+    .navbar-connected {
+      float: right;
+      padding-top: 23px;
+      font-weight: bold;
     }
 
