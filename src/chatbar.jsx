@@ -13,6 +13,7 @@ class ChatBar extends Component {
       event.target.value = "";
     } else if (event.key === 'Enter' && event.target.className === 'chatbar-username') {
       this.props.newUser(event.target.value);
+      event.target.value = "";
     }
   }
 
