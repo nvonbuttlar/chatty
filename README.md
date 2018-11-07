@@ -22,8 +22,8 @@ open http://localhost:3000
 
 ## Screenshots
 
-!["Screenshot of Chit-Chat in action"]()
-!["Screenshot of Chit-Chat in action"]()
-!["Screenshot of Chit-Chat in action"]()
-!["Screenshot of Chit-Chat in action"]()
+!["Screenshot of Chit-Chat in action"](https://github.com/nvonbuttlar/chatty/blob/master/screenshots/1.png)
+!["Screenshot of Chit-Chat in action"](https://github.com/nvonbuttlar/chatty/blob/master/screenshots/2.png)
+!["Screenshot of Chit-Chat in action"](https://github.com/nvonbuttlar/chatty/blob/master/screenshots/3.png)
+!["Screenshot of Chit-Chat in action"](https://github.com/nvonbuttlar/chatty/blob/master/screenshots/4.png)
 
