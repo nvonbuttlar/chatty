@@ -8,7 +8,6 @@ class ChatBar extends Component {
   }
 
   handleKeyPress(event) {
-    // Error Handling
     if(event.key === 'Enter' && event.target.value === "" && event.target.className === 'chatbar-username'){
       alert("Please enter a valid username");
     } else if (event.key === 'Enter' && event.target.className === 'chatbar-username') {

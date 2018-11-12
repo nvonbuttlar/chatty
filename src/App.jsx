@@ -15,11 +15,12 @@ class App extends Component {
       userCount: 0
     }
 
-    this.createNewMessage = this.createNewMessage.bind(this);
-    this.updateUser = this.updateUser.bind(this);
 
     // Creates a new WebSocket at localhost:3001
     this.dogSocket = new WebSocket("ws://localhost:3001");
+
+    this.createNewMessage = this.createNewMessage.bind(this);
+    this.updateUser = this.updateUser.bind(this);
 
 
   }
