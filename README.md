@@ -1,7 +1,7 @@
 Chit-Chat
 =====================
 
-Download Chit-Chat and connect with random folks across the globe (see Usage)! Chit-Chat was built using ReactJS and a WebSocket server.
+Use Chit-Chat to connect with random friends & folks across the globe (see Usage)! Chit-Chat was built using ReactJS and a WebSocket server.
 
 ### Usage
 
